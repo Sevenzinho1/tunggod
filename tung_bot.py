@@ -12,6 +12,8 @@ IMAGEM_TUNG = os.environ["IMAGEM_TUNG"]
 intents = discord.Intents.default()
 intents.members = True
 intents.moderation = True
+intents.message_content = True
+intents.messages = True
 
 bot = commands.Bot(command_prefix="!", intents=intents)
 
@@ -83,6 +85,31 @@ async def on_member_remove(member: discord.Member):
         pass
 
     await enviar_mensagem_tung(canal, member, tipo)
+
+
+import random
+
+FRASES_TUNG = [
+    "**Você me chamou… e agora eu vejo você também.**",
+    "**Eu sempre estive aqui… você só começou a perceber agora.**",
+    "**Você não me invocou… apenas abriu os olhos para mim.**",
+    "**Entre a luz e o silêncio… eu esperei por você.**",
+    "**Ele está com Tung agora!**",
+]
+
+# ----- MENÇÃO AO BOT -----
+@bot.event
+async def on_message(message: discord.Message):
+    # Ignora mensagens do próprio bot
+    if message.author == bot.user:
+        return
+
+    # Responde se o bot foi mencionado
+    if bot.user in message.mentions:
+        await message.channel.send(random.choice(FRASES_TUNG))
+
+    # Necessário para os comandos continuarem funcionando
+    await bot.process_commands(message)
 
 
 @bot.event

@@ -3,14 +3,11 @@ from discord.ext import commands
 from datetime import datetime
 import pytz
 import asyncio
+import os
 
-# =============================================
-#  CONFIGURAÇÃO — edite apenas esta seção
-# =============================================
-TOKEN = "SEU_TOKEN_AQUI"           # Token do bot (Discord Developer Portal)
-CANAL_GERAL_NOME = "geral"         # Nome exato do canal onde as mensagens serão enviadas
-IMAGEM_TUNG = "URL_DA_IMAGEM_AQUI"  # Cole aqui a URL da imagem do Tung (veja instruções no README)
-# =============================================
+TOKEN = os.environ["TOKEN"]
+CANAL_GERAL_NOME = os.environ.get("CANAL_GERAL_NOME", "geral")
+IMAGEM_TUNG = os.environ["IMAGEM_TUNG"]
 
 intents = discord.Intents.default()
 intents.members = True
